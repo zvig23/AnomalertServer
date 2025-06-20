@@ -1,0 +1,50 @@
+{
+  "DB": [
+    {
+      "ID": 3,
+      "Waypoints": [
+        {
+          "Lat": 31.7683,
+          "Lon": 35.2137,
+          "Alt": 12000
+        },
+        {
+          "Lat": 32.7683,
+          "Lon": 36.2137,
+          "Alt": 12000
+        }
+      ],
+      "CurrentSpeed": {
+        "Value": 6,
+        "Units": "KNOTS"
+      },
+      "Heading": {
+        "Value": 12,
+        "Units": "DEGREES"
+      }
+    },
+    {
+      "ID": 5,
+      "Waypoints": [
+        {
+          "Lat": 32.0853,
+          "Lon": 34.7818,
+          "Alt": 14000
+        },
+        {
+          "Lat": 33.0853,
+          "Lon": 35.7818,
+          "Alt": 14000
+        }
+      ],
+      "CurrentSpeed": {
+        "Value": 6,
+        "Units": "KNOTS"
+      },
+      "Heading": {
+        "Value": 12,
+        "Units": "DEGREES"
+      }
+    }
+  ]
+}
