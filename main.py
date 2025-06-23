@@ -4,9 +4,20 @@ import uvicorn
 
 from FlightDB import FlightDB
 from modules.FlightPlot import FlightPlot
+from modules.FlightTrack import FlightTrack
+from modules.ModelIO import AIInput
+from modules.Preidction import Prediction
+from requests import predict
+from fastapi.middleware.cors import CORSMiddleware
 
-# FastAPI app
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or restrict to ["http://localhost:3000"] for security
+    allow_credentials=True,
+    allow_methods=["*"],  # or specific methods like ["GET"]
+    allow_headers=["*"],
+)
 db = FlightDB("data/db.json")
 
 
@@ -14,12 +25,13 @@ db = FlightDB("data/db.json")
 def get_flights_plots():
     return db.get_flight_plots()
 
-# @app.get("/Get_track_info", response_model=FlightTrack)
-# def get_track_info(id: int):
-#     for flight in flights_db:
-#         if flight.id == id:
-#             return flight
-#     raise HTTPException(status_code=404, detail="Track not found")
+@app.get("/get_track_info/{track_id}", response_model=FlightTrack)
+def get_track_info(track_id: int):
+    track : FlightTrack = db.get_flight_track_by_id(track_id)
+    prediction : Prediction = predict(AIInput(input=track)).output
+    track.anomaly = prediction
+    return track
+
 
 if __name__ == "__main__":
     # Use this for debugging purposes only

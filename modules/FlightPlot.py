@@ -8,8 +8,8 @@ from modules.Waypoint import Waypoint
 
 
 class FlightPlot(BaseModel):
-    id: int = Field(alias="ID")
+    trackID: int = Field(alias="ID", serialization_alias="trackID")
     waypoint: Waypoint = Field(alias="waypoint")
-    current_speed: Speed = Field(alias="CurrentSpeed")
-    heading: Angle = Field(alias="Heading")
+    current_speed: Speed = Field(alias="CurrentSpeed", serialization_alias="currentSpeed")
+    heading: Angle = Field(alias="Heading", serialization_alias="heading")
     hasAnomaly: Optional[bool] = Field(None, alias="hasAnomaly")

@@ -3,7 +3,8 @@ from pathlib import Path
 from typing import List, Dict, Any
 
 from modules.FlightPlot import FlightPlot
-from modules.Waypoint import Waypoint
+from modules.FlightTrack import FlightTrack
+from modules.Waypoint import Waypoint, createWaypointList
 
 
 class FlightDB:
@@ -31,11 +32,18 @@ class FlightDB:
     def get_flight_plots(self) -> list[FlightPlot]:
         plots: List[FlightPlot] = []
         for record in self.db:
-            waypoint = (record["Waypoints"][-1])
-            record["waypoint"] = Waypoint(**waypoint)
-            plots.append(FlightPlot(**record))
-
+            plot_record = record.copy()
+            waypoint = (plot_record["Waypoints"][-1])
+            plot_record["waypoint"] = Waypoint(**waypoint)
+            plots.append(FlightPlot(**plot_record))
         return plots
 
-    def get_flight_by_id(self, flight_id: int) -> Dict[str, Any] | None:
-        return next((f for f in self.db if f["ID"] == flight_id), None)
+    def get_flight_track_by_id(self, flight_id: int) -> FlightTrack | None:
+        for record in self.db:
+            if record["ID"] == flight_id:
+                track_record = record.copy()
+                track_record["Waypoints"] = createWaypointList(track_record["Waypoints"])
+                track_record["Plots"] = [FlightPlot(waypoint=waypoint, **track_record) for waypoint in
+                                        track_record["Waypoints"]]
+                return FlightTrack(**track_record)
+        return None

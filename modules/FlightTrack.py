@@ -2,12 +2,12 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
-from modules.Waypoint import Waypoint
+from modules.FlightPlot import FlightPlot
 
-from modules.Anomaly import Anomaly
+from modules.Preidction import Prediction
 
 
 class FlightTrack(BaseModel):
-    id: int = Field(..., alias="ID")
-    waypoints: List[Waypoint] = Field(..., alias="WP")
-    Anomaly: Optional[Anomaly] = Field(None, alias="Anomaly")
+    id: int = Field(..., alias="ID", serialization_alias="trackID")
+    plots: List[FlightPlot] = Field(..., alias="Plots", serialization_alias="plots")
+    anomaly: Optional[Prediction] = Field(None, alias="Anomaly")

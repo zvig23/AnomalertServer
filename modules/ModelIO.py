@@ -1,7 +1,7 @@
-from typing import List
 from pydantic import BaseModel
 
-from modules import FlightTrack, Waypoint
+from modules.FlightTrack import FlightTrack
+from modules.Preidction import Prediction
 
 
 class AIInput(BaseModel):
@@ -9,4 +9,4 @@ class AIInput(BaseModel):
 
 
 class AIOutput(BaseModel):
-    output: List[Waypoint]
+    output: Prediction
