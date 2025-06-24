@@ -20,10 +20,16 @@ app.add_middleware(
 )
 db = FlightDB("data/db.json")
 
+anomaly_threshold = 0.5
 
 @app.get("/get_flights_plots", response_model=List[FlightPlot])
 def get_flights_plots():
-    return db.get_flight_plots()
+    plots: List[FlightPlot] = db.get_flight_plots()
+    for plot in plots:
+        track: FlightTrack = db.get_flight_track_by_id(plot.trackID)
+        prediction: Prediction = predict(AIInput(input=track)).output
+        plot.hasAnomaly = prediction.proba > anomaly_threshold
+    return plots
 
 @app.get("/get_track_info/{track_id}", response_model=FlightTrack)
 def get_track_info(track_id: int):
