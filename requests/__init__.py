@@ -3,14 +3,18 @@ import random
 from modules.ModelIO import AIOutput, AIInput
 from modules.Preidction import Prediction
 
+anomaly_threshold = 0.5
+
 
 def predict(flightTrack: AIInput) -> AIOutput:
     # Currently this method will generate randomly a prediction
     # in thr close future it will be changed to aAPI calls to a real AI model using the same data structure
+    # This is mock !!!
+    proba = random.random()
     prediction : Prediction = Prediction(
-        plots=flightTrack.input.plots,
+        plots= flightTrack.input.plots if proba > anomaly_threshold else []  ,
         proba=random.random(),
-        reason="AI model said so",
+        reason="AI model said so" if proba > anomaly_threshold else "you good",
         id=flightTrack.input.id,
 
     )

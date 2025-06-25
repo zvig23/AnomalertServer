@@ -7,7 +7,7 @@ from modules.FlightPlot import FlightPlot
 from modules.FlightTrack import FlightTrack
 from modules.ModelIO import AIInput
 from modules.Preidction import Prediction
-from requests import predict
+from requests import predict, anomaly_threshold
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -20,7 +20,6 @@ app.add_middleware(
 )
 db = FlightDB("data/db.json")
 
-anomaly_threshold = 0.5
 
 @app.get("/get_flights_plots", response_model=List[FlightPlot])
 def get_flights_plots():
