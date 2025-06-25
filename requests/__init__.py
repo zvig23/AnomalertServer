@@ -10,13 +10,13 @@ def predict(flightTrack: AIInput) -> AIOutput:
     # Currently this method will generate randomly a prediction
     # in thr close future it will be changed to aAPI calls to a real AI model using the same data structure
     # This is mock !!!
-    proba = random.random()
-    prediction : Prediction = Prediction(
-        plots= flightTrack.input.plots if proba > anomaly_threshold else []  ,
-        proba=random.random(),
+    proba = flightTrack.input.id * 0.1
+    prediction: Prediction = Prediction(
+        plots=flightTrack.input.plots if proba > anomaly_threshold else [],
+        proba=proba,
         reason="AI model said so" if proba > anomaly_threshold else "you good",
         id=flightTrack.input.id,
 
     )
-    ai_output : AIOutput = AIOutput(output=prediction)
+    ai_output: AIOutput = AIOutput(output=prediction)
     return ai_output
